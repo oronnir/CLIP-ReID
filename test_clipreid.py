@@ -1,4 +1,5 @@
 import os
+import time
 from config import cfg
 import argparse
 from datasets.make_dataloader_clipreid import make_dataloader
@@ -8,6 +9,7 @@ from utils.logger import setup_logger
 
 
 if __name__ == "__main__":
+    # Parse command line arguments
     parser = argparse.ArgumentParser(description="ReID Baseline Training")
     parser.add_argument(
         "--config_file", default="configs/person/vit_clipreid.yml", help="path to config file", type=str
@@ -16,6 +18,10 @@ if __name__ == "__main__":
                         nargs=argparse.REMAINDER)
 
     args = parser.parse_args()
+    # --config_file configs/person/vit_clipreid.yml TEST.WEIGHT '/home/oron_nir/clipreid/models/Market1501_clipreid_ViT-B-16_60.pth' DATASETS.NAMES 'market1501'
+    # args.config_file = 'configs/person/vit_clipreid.yml'
+    # args.TEST_WEIGHT = '/home/oron_nir/clipreid/models/Market1501_clipreid_ViT-B-16_60.pth'
+    # args.DATASETS_NAMES = 'market1501'
 
     if args.config_file != "":
         cfg.merge_from_file(args.config_file)
@@ -62,9 +68,11 @@ if __name__ == "__main__":
             logger.info("rank_1:{}, rank_5 {} : trial : {}".format(rank_1, rank5, mAP, trial))
         logger.info("sum_rank_1:{:.1%}, sum_rank_5 {:.1%}, sum_mAP {:.1%}".format(all_rank_1.sum()/10.0, all_rank_5.sum()/10.0, all_mAP.sum()/10.0))
     else:
-       do_inference(cfg,
+        start_time = time.time()
+        do_inference(cfg,
                  model,
                  val_loader,
                  num_query)
-
-
+        end_time = time.time()
+        total_time = end_time - start_time
+        print("Total inference time: {:.2f} seconds".format(total_time))

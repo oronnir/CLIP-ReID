@@ -1,4 +1,5 @@
 import os
+import time
 from config import cfg_base as cfg
 import argparse
 from datasets.make_dataloader import make_dataloader
@@ -6,6 +7,10 @@ from model.make_model import make_model
 from processor.processor import do_inference
 from utils.logger import setup_logger
 
+# (clipreid) oron_nir@mass-05:~/clipreid/CLIP-ReID$ CUDA_VISIBLE_DEVICES=0 python test_clipreid.py --config_file configs/person/vit_clipreid.yml TEST.WEIGHT '/home/oron_nir/clipreid/models/Market1501_clipreid_ViT-B-16_60.pth'
+# (clipreid) oron_nir@mass-05:~/clipreid/CLIP-ReID$ CUDA_VISIBLE_DEVICES=0 python test_clipreid.py --config_file configs/person/vit_clipreid.yml TEST.WEIGHT '/home/oron_nir/clipreid/models/Market1501_clipreid_12x12sie_ViT-B-16_60.pth'
+#  /home/oron_nir/clipreid/models/Market1501_clipreid_12x12sie_ViT-B-16_60.pth
+#  /home/oron_nir/clipreid/models/Market1501_clipreid_ViT-B-16_60.pth
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="ReID Baseline Training")
@@ -62,9 +67,12 @@ if __name__ == "__main__":
             logger.info("rank_1:{}, rank_5 {} : trial : {}".format(rank_1, rank5, mAP, trial))
         logger.info("sum_rank_1:{:.1%}, sum_rank_5 {:.1%}, sum_mAP {:.1%}".format(all_rank_1.sum()/10.0, all_rank_5.sum()/10.0, all_mAP.sum()/10.0))
     else:
-       do_inference(cfg,
+        start_time = time.time()
+        do_inference(cfg,
                  model,
                  val_loader,
                  num_query)
-
+        end_time = time.time()
+        total_time = end_time - start_time
+        print("Total inference time: {:.2f} seconds".format(total_time))
 

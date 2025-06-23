@@ -1,0 +1,30 @@
+{
+  "configurations": [
+    {
+      "type": "debugpy",
+      "request": "launch",
+      "name": "Test CLIP-ReID Market1501",
+      "program": "${workspaceFolder}/clipreid_inference.py",
+      "python": "/home/oron_nir/miniconda3/envs/clipreid/bin/python",
+      "args": [
+        "--config_file",
+        "configs/person/vit_clipreid.yml",
+        "TEST.WEIGHT",
+        "/home/oron_nir/clipreid/models/Market1501_clipreid_ViT-B-16_60.pth",
+        "DATASETS.NAMES",
+        "market1501"
+      ],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "PATH": "/home/oron_nir/miniconda3/envs/clipreid/bin:${env:PATH}",
+        "CONDA_DEFAULT_ENV": "clipreid",
+        "CONDA_PREFIX": "/home/oron_nir/miniconda3/envs/clipreid"
+      },
+      "justMyCode": false,
+      "envFile": "${workspaceFolder}/.env",
+      "stopOnEntry": false
+    }
+  ],
+  "version": "0.2.0"
+}

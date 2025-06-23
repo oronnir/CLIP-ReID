@@ -105,12 +105,15 @@ class build_transformer(nn.Module):
         self.text_encoder = TextEncoder(clip_model)
 
     def forward(self, x = None, label=None, get_image = False, get_text = False, cam_label= None, view_label=None):
-        if get_text == True:
+        get_text = bool(get_text)
+        get_image = bool(get_image)
+        if get_text:
             prompts = self.prompt_learner(label) 
             text_features = self.text_encoder(prompts, self.prompt_learner.tokenized_prompts)
             return text_features
 
-        if get_image == True:
+        # if get_image == True:
+        if get_image:
             image_features_last, image_features, image_features_proj = self.image_encoder(x) 
             if self.model_name == 'RN50':
                 return image_features_proj[0]
