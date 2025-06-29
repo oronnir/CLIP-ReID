@@ -69,7 +69,7 @@ TEST:
   FEAT_NORM: 'yes'
 
 DATASETS:
-#   NAMES: ('veri')
+  NAMES: ('veri')
 #   ROOT_DIR: ('')
 # OUTPUT_DIR: ''
 

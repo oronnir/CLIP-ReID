@@ -348,7 +348,7 @@ if __name__ == "__main__":
     print(f"Model parameters: {summary_info.total_params / 1e6:.2f} M")
     print(f"Model size: {summary_info.total_param_bytes / 1e6:.2f} MB")
 
-    # fix start
+    # start ONNX export
 
     # Replace the ONNX export section with this improved version:
 
@@ -357,11 +357,17 @@ if __name__ == "__main__":
     model.eval()
     models_dir = '/home/oron_nir/clipreid/models/'
     os.makedirs(models_dir, exist_ok=True)
-    onnx_file_path = os.path.join(models_dir, 'Market1501_clipreid_ViT-B-16_60.onnx')
+    # onnx_file_path = os.path.join(models_dir, 'Market1501_clipreid_ViT-B-16_60.onnx')
+    onnx_file_path = os.path.join(models_dir, 'VeRi_clipreid_ViT-B-16_60.onnx')
 
     export_to_onnx(model, onnx_file_path, input_size=(1, 3, 256, 128), opset_version=11)
 
-    # fix end
+    # end ONNX export
+
+    # Check if ONNX file exists
+    if not os.path.exists(onnx_file_path):
+        logger.error(f"ONNX export failed, file not found at {onnx_file_path}")
+        raise FileNotFoundError(f"ONNX export failed, file not found at {onnx_file_path}")
 
 
 
@@ -369,7 +375,8 @@ if __name__ == "__main__":
     # serialize the model to a ONNX file
     model.eval()
     models_dir = '/home/oron_nir/clipreid/models/'
-    onnx_file_path = os.path.join(models_dir, 'Market1501_clipreid_ViT-B-16_60.onnx')
+    # onnx_file_path = os.path.join(models_dir, 'Market1501_clipreid_ViT-B-16_60.onnx')
+    onnx_file_path = os.path.join(models_dir, 'VeRi_clipreid_ViT-B-16_60.onnx')
     dummy_input = torch.randn(1, 3, 256, 128).to("cuda")
     print(f"\n\nExporting model to ONNX format at {onnx_file_path}...")
     torch.onnx.export(model, dummy_input, onnx_file_path, export_params=True, opset_version=11,

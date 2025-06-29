@@ -3,16 +3,20 @@
     {
       "type": "debugpy",
       "request": "launch",
-      "name": "Test CLIP-ReID Market1501",
+      // "name": "Test CLIP-ReID Market1501",
+      "name": "Test CLIP-ReID Veri",
       "program": "${workspaceFolder}/clipreid_inference.py",
       "python": "/home/oron_nir/miniconda3/envs/clipreid/bin/python",
       "args": [
         "--config_file",
-        "configs/person/vit_clipreid.yml",
+        // "configs/person/vit_clipreid.yml",
+        "configs/veri/vit_prom.yml",
         "TEST.WEIGHT",
-        "/home/oron_nir/clipreid/models/Market1501_clipreid_ViT-B-16_60.pth",
+        // "/home/oron_nir/clipreid/models/Market1501_clipreid_ViT-B-16_60.pth",
+        "/home/oron_nir/clipreid/models/VeRi_clipreid_ViT-B-16_60.pth",
         "DATASETS.NAMES",
-        "market1501"
+        // "market1501"
+        "veri"
       ],
       "console": "integratedTerminal",
       "cwd": "${workspaceFolder}",

@@ -68,12 +68,12 @@ TEST:
   FEAT_NORM: 'yes'
 
 DATASETS:
-  NAMES: ('dukemtmc')
+  NAMES: ('veri')
   ROOT_DIR: ('../../transreid/data/')
 OUTPUT_DIR: ''
 
 
-# NAMES: ('dukemtmc','market1501')
+# NAMES: ('dukemtmc','market1501', 'veri')
 #   NAMES: ('dukemtmc')
 #   ROOT_DIR: ('')
 # OUTPUT_DIR: ''
